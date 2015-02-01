@@ -246,6 +246,24 @@ var utils = function (plugin) {
         });
       };
 
+      db.group = function (index, key, group_level, callback) {
+        var params = { group: true, group_level: group_level };
+        var key = [].concat(key);
+        var endkey = [].concat(key);
+        endkey.push({});
+        if (key.length > group_level) {
+          params.key = key
+        } else {
+          key.push(null);
+          params.startkey = key;
+          params.endkey = endkey;
+        }
+        db.query(index, params, function (err, rows) {
+          if (err) return callback(err);
+          callback(err, (rows.length > 0) ? rows[0].value : []);
+        });
+      }
+
       db.queryFti = function (index, params, callback) {
         // `params` is optional, when only two args passed second is callback.
         if (arguments.length === 2) {
