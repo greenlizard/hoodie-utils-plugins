@@ -270,7 +270,8 @@ var utils = function (plugin) {
           callback = params;
           params = null;
         }
-        var fti_url = '_fti/local' + db._resolve('_design/fulltext/' + index);
+
+        var fti_url = db._resolve('_fti/_design/fulltext/' + index);
         // If params have been passed we build the query string.
         if (params) {
           var qs = _.reduce(params, function (memo, v, k) {
