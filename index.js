@@ -114,7 +114,7 @@ var utils = function (plugin) {
           }
           ddoc[ddoc_type][ddoc_name] = serialised;
           hoodie.request('PUT', ddoc_url, {data: ddoc}, function cb(err, ddoc, res) {
-            if (res.statusCode === 409) {
+            if (res && res.statusCode === 409) {
               return designDocAdd(ddoc_type, ddoc_name, ddoc_data, callback);
             }
             callback(err, ddoc, res);
